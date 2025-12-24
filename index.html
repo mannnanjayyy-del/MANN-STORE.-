@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Chat dengan Reaksi</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .chat-box {
+      width: 360px;
+      background: #fff;
+      border-radius: 8px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .messages {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .message {
+      background: #eaeaea;
+      padding: 8px;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+
+    .reactions span {
+      cursor: pointer;
+      margin-right: 6px;
+      font-size: 14px;
+    }
+
+    .input-box {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 6px;
+    }
+
+    button {
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+<div class="chat-box">
+  <div class="messages" id="messages"></div>
+
+  <div class="input-box">
+    <input type="text" id="chatInput" placeholder="Ketik pesan...">
+    <button onclick="sendMessage()">Kirim</button>
+  </div>
+</div>
+
+<script>
+  function sendMessage() {
+    const input = document.getElementById("chatInput");
+    if (input.value.trim() === "") return;
+
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "message";
+
+    msgDiv.innerHTML = `
+      <div>${input.value}</div>
+      <div class="reactions">
+        <span onclick="react(this)">👍 0</span>
+        <span onclick="react(this)">❤️ 0</span>
+        <span onclick="react(this)">😂 0</span>
+        <span onclick="react(this)">😡 0</span>
+      </div>
+    `;
+
+    document.getElementById("messages").appendChild(msgDiv);
+    input.value = "";
+  }
+
+  function react(el) {
+    let parts = el.innerText.split(" ");
+    let emoji = parts[0];
+    let count = parseInt(parts[1]);
+    el.innerText = emoji + " " + (count + 1);
+  }
+</script>
+
+</body>
+</html>
